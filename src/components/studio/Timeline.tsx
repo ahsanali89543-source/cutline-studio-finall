@@ -8,6 +8,7 @@ import { formatTime, projectSpan, round } from "@/lib/captions/timing";
 import type { Word } from "@/lib/captions/types";
 import {
   AudioLines,
+  Eraser,
   Film,
   Magnet,
   Minus,
@@ -387,6 +388,34 @@ export function Timeline() {
             WAV
           </Button>
         ) : null}
+        <span className="mx-1 h-5 w-px bg-white/10" />
+        <Button
+          tone="quiet"
+          size="xs"
+          disabled={!words.length}
+          title="Clear all captions only (keep video & audio)"
+          onClick={() => useStudio.getState().clearCaptions()}
+        >
+          <Eraser className="size-3.5" /> Clear captions
+        </Button>
+        <Button
+          tone="ghost"
+          size="xs"
+          disabled={!past}
+          title="Undo (Ctrl+Z)"
+          onClick={() => useStudio.getState().undo()}
+        >
+          <Undo2 className="size-3.5" /> Undo
+        </Button>
+        <Button
+          tone="ghost"
+          size="xs"
+          disabled={!future}
+          title="Redo (Ctrl+Shift+Z)"
+          onClick={() => useStudio.getState().redo()}
+        >
+          <Redo2 className="size-3.5" /> Redo
+        </Button>
         <div className="ml-auto flex items-center gap-1.5">
           <TimeReadout />
           <Button tone="ghost" size="xs" title="Zoom out (−)" onClick={() => setPps((value) => Math.max(MIN_PPS, value / 1.35))}>

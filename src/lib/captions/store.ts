@@ -66,6 +66,7 @@ type StudioState = {
   placeWord: (id: string, patch: Partial<Word>) => void;
   placeWords: (patches: Record<string, Partial<Word>>) => void;
   replaceWords: (words: Word[], speakers?: Record<string, string>) => void;
+  clearCaptions: () => void;
   updateWord: (id: string, patch: Partial<Word>) => void;
   editText: (id: string, text: string) => void;
   removeWord: (id: string) => void;
@@ -305,6 +306,11 @@ export const useStudio = create<StudioState>((set, get) => {
         selectedIds: [],
         playhead: words[0]?.start ?? 0,
       });
+    },
+    clearCaptions: () => {
+      if (!get().project.words.length) return;
+      commit({ words: [] });
+      set({ selectedId: null, selectedIds: [] });
     },
     updateWord: (id, patch) => {
       const words = get()
